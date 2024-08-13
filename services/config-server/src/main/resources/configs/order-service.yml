@@ -1,0 +1,29 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/exchangeadak
+    username: arvin_z
+    password: 856921
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.adak.order_mng.kafka.OrderConfirmation
+
+application:
+  config:
+    currency-url: http://localhost:8222/api/v1/currency
+    exchange-url: http://localhost:8222/api/v1/exchange
+
+

@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: exchange-service
+          uri: lb:http://EXCHANGE-SERVICE
+          predicates:
+            - Path=/api/v1/exchange/**
+        - id: order-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/order/**
+        - id: exchange-service
+          uri: lb:http://EXCHANGE-SERVICE
+          predicates:
+            - Path=/api/v1/currency/**
+  security:
+    oauth2:
+      client:
+        resourceserver:
+          jwt:
+            issuer-uri: http://localhost:9098/realms/micro-service
+server:
+  port: 8222
+logging:
+  level:
+    org.springframework.security.oauth2: DEBUG
+
